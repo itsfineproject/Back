@@ -18,13 +18,13 @@ public class User {
     private long id;
 
     @Column(unique=true)
-    @Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$", message="Email should include only english letters, digits and symbols: ._-")
+    @Pattern(regexp = "^((\\w+)\\.)*(\\w+)@((\\w+)\\.)+[a-zA-Z]{2,6}$", message="Email should include only english letters, digits and symbols: ._")
     private String email;
 
     @Size(min = 5, max = 20, message = "Name should be from 5 to 20 symbols")
     private String name;
 
-    @Pattern(regexp = "^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})",
-            message="Password should be not less than 6 characters and contain either an uppercase letter or a digit")
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{6,}$",
+            message="Password should be not less than 6 characters and contain at least one uppercase letter and a digit")
     private String password;
 }

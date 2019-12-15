@@ -24,7 +24,7 @@ public class UserEntity {
     private String password;
     private List<String> roles;
 
-    @OneToMany(mappedBy = "users")
+    @OneToMany(mappedBy = "user")
     private Set<CarEntity> cars;
 
     public UserEntity(long id, String email, String name, String password) {

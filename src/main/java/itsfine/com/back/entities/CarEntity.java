@@ -23,7 +23,7 @@ public class CarEntity {
     @ManyToOne
     private UserEntity user;
 
-    @OneToMany(mappedBy = "cars")
+    @OneToMany(mappedBy = "car")
     private Set<FineEntity> fines;
 
     public CarEntity(long id, String carNumber, UserEntity user) {
