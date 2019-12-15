@@ -1,4 +1,4 @@
-package itsfine.com.back.application.entities;
+package itsfine.com.back.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,7 +23,4 @@ public class FineEntity {
 
     @ManyToOne
     private CarEntity car;
-
-
-
 }

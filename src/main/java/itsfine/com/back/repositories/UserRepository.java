@@ -1,6 +1,6 @@
-package itsfine.com.back.application.repositories;
+package itsfine.com.back.repositories;
 
-import itsfine.com.back.application.entities.UserEntity;
+import itsfine.com.back.entities.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<UserEntity, Long> {

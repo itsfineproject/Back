@@ -1,9 +1,10 @@
 package itsfine.com.back.mappers;
 
 
-import itsfine.com.back.application.entities.CarEntity;
-import itsfine.com.back.application.repositories.UserRepository;
+
 import itsfine.com.back.dtos.Car;
+import itsfine.com.back.entities.CarEntity;
+import itsfine.com.back.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.annotation.PostConstruct;
 

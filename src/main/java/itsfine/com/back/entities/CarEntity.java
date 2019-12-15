@@ -1,8 +1,9 @@
-package itsfine.com.back.application.entities;
+package itsfine.com.back.entities;
 
 import lombok.*;
 import javax.persistence.*;
 import java.util.Set;
+import itsfine.com.back.entities.*;
 
 @NoArgsConstructor
 @AllArgsConstructor

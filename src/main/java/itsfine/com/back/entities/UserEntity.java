@@ -1,6 +1,7 @@
-package itsfine.com.back.application.entities;
+package itsfine.com.back.entities;
 
 import lombok.*;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;

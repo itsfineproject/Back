@@ -1,8 +1,8 @@
 package itsfine.com.back.mappers;
 
-import itsfine.com.back.application.entities.FineEntity;
-import itsfine.com.back.application.repositories.CarRepository;
 import itsfine.com.back.dtos.Fine;
+import itsfine.com.back.entities.FineEntity;
+import itsfine.com.back.repositories.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class FineMapper extends AbstractMapper<FineEntity, Fine> {

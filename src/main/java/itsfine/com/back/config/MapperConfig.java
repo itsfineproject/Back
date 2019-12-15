@@ -1,8 +1,5 @@
-package itsfine.com.back.application.config;
+package itsfine.com.back.config;
 
-import itsfine.com.back.application.entities.CarEntity;
-import itsfine.com.back.application.entities.FineEntity;
-import itsfine.com.back.application.entities.UserEntity;
 import itsfine.com.back.mappers.CarMapper;
 import itsfine.com.back.mappers.FineMapper;
 import itsfine.com.back.mappers.UserMapper;
