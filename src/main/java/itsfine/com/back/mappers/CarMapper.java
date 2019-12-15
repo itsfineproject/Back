@@ -1,9 +1,9 @@
-package mappers;
+package itsfine.com.back.mappers;
 
 
-import application.entities.CarEntity;
-import application.repositories.UserRepository;
-import dtos.Car;
+import itsfine.com.back.application.entities.CarEntity;
+import itsfine.com.back.application.repositories.UserRepository;
+import itsfine.com.back.dtos.Car;
 import org.springframework.beans.factory.annotation.Autowired;
 import javax.annotation.PostConstruct;
 

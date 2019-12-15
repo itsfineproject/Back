@@ -1,14 +1,14 @@
-package application.config;
+package itsfine.com.back.application.config;
 
-import application.entities.CarEntity;
-import application.entities.FineEntity;
-import application.entities.UserEntity;
-import mappers.CarMapper;
-import mappers.FineMapper;
-import mappers.UserMapper;
-import dtos.Car;
-import dtos.Fine;
-import dtos.User;
+import itsfine.com.back.application.entities.CarEntity;
+import itsfine.com.back.application.entities.FineEntity;
+import itsfine.com.back.application.entities.UserEntity;
+import itsfine.com.back.mappers.CarMapper;
+import itsfine.com.back.mappers.FineMapper;
+import itsfine.com.back.mappers.UserMapper;
+import itsfine.com.back.dtos.Car;
+import itsfine.com.back.dtos.Fine;
+import itsfine.com.back.dtos.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

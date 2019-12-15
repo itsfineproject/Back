@@ -1,6 +1,6 @@
-package application.repositories;
+package itsfine.com.back.application.repositories;
 
-import application.entities.FineEntity;
+import itsfine.com.back.application.entities.FineEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FineRepository extends JpaRepository<FineEntity, Long> {

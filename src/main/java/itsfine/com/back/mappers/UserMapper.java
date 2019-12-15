@@ -1,7 +1,7 @@
-package mappers;
+package itsfine.com.back.mappers;
 
-import application.entities.UserEntity;
-import dtos.User;
+import itsfine.com.back.application.entities.UserEntity;
+import itsfine.com.back.dtos.User;
 
 public class UserMapper extends AbstractMapper<UserEntity, User> {
 

@@ -1,6 +1,6 @@
-package application.repositories;
+package itsfine.com.back.application.repositories;
 
-import application.entities.CarEntity;
+import itsfine.com.back.application.entities.CarEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CarRepository extends JpaRepository<CarEntity, Long> {

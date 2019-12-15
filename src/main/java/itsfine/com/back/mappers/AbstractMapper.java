@@ -1,4 +1,4 @@
-package mappers;
+package itsfine.com.back.mappers;
 
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
