@@ -1,6 +1,7 @@
 import itsfine.com.back.dtos.Car;
 import itsfine.com.back.dtos.User;
 import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -34,6 +35,11 @@ public class EntityJunitTests {
     @BeforeAll
     static void setUpBeforeClass() {
         context = SpringApplication.run(EntityJunitTests.class);
+    }
+
+    @AfterAll
+    static void tearDown(){
+        context.close();
     }
 
     @Test
