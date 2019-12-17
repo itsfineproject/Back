@@ -3,12 +3,11 @@ package itsfine.com.back.entities;
 import lombok.*;
 import javax.persistence.*;
 import java.util.Set;
-import itsfine.com.back.entities.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter @Setter
-@EqualsAndHashCode(of = {"car_number"})
+@EqualsAndHashCode(of = {"carNumber"})
 
 @Entity
 @Table(name = "cars", uniqueConstraints={@UniqueConstraint(columnNames={"car_number"})})
@@ -17,8 +16,13 @@ public class CarEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
     @Column(name = "car_number")
     private String carNumber;
+
+    private String carName;
+    private String carPassportNumber;
+    private String comment;
 
     @ManyToOne
     private UserEntity user;
@@ -26,14 +30,11 @@ public class CarEntity {
     @OneToMany(mappedBy = "car")
     private Set<FineEntity> fines;
 
-    public CarEntity(long id, String carNumber, UserEntity user) {
-        this.id = id;
+    public CarEntity(String carNumber, String carName, String carPassportNumber, String comment, UserEntity user) {
         this.carNumber = carNumber;
-        this.user = user;
-    }
-
-    public CarEntity(String carNumber, UserEntity user) {
-        this.carNumber = carNumber;
+        this.carName = carName;
+        this.carPassportNumber = carPassportNumber;
+        this.comment = comment;
         this.user = user;
     }
 }

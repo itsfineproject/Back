@@ -16,5 +16,6 @@ public class Fine {
     private double sum;
     private LocalDateTime dateTime;
     private long carId;
+    private boolean isPaid;
 
 }

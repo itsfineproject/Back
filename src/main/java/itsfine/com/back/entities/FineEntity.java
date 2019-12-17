@@ -20,7 +20,7 @@ public class FineEntity {
     private int parkingId;
     private double sum;
     private LocalDateTime dateTime;
-
     @ManyToOne
     private CarEntity car;
+    private boolean isPaid;
 }

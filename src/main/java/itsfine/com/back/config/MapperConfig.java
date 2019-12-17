@@ -1,10 +1,13 @@
 package itsfine.com.back.config;
 
+import itsfine.com.back.documents.InvalidCarDataDoc;
+import itsfine.com.back.dtos.InvalidCarData;
 import itsfine.com.back.entities.CarEntity;
 import itsfine.com.back.entities.FineEntity;
 import itsfine.com.back.entities.UserEntity;
 import itsfine.com.back.mappers.CarMapper;
 import itsfine.com.back.mappers.FineMapper;
+import itsfine.com.back.mappers.InvalidCarDataMapper;
 import itsfine.com.back.mappers.UserMapper;
 import itsfine.com.back.dtos.Car;
 import itsfine.com.back.dtos.Fine;
@@ -43,5 +46,8 @@ public class MapperConfig {
     public FineMapper fineMapper(){
         return new FineMapper(FineEntity.class, Fine.class);
     }
+
+    @Bean
+    public InvalidCarDataMapper invalidCarDataMapper(){return  new InvalidCarDataMapper(InvalidCarDataDoc.class, InvalidCarData.class);}
 
 }

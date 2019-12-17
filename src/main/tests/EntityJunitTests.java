@@ -10,6 +10,8 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,19 +20,25 @@ import static org.junit.jupiter.api.Assertions.*;
 public class EntityJunitTests {
 
     static ConfigurableApplicationContext context;
-    long id = 123465;
-    String email = "vasya@vfdrt.com";
-    String name = "vasya kozlov";
-    String password = "vasyaV1";
 
-    String carNumber = "012-85-145";
-    long carId = 74546456;
-    User user = null;
     private static Validator validator;
     static {
         ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
         validator = validatorFactory.usingContext().getValidator();
     }
+
+    String email = "vasya@vfdrt.com";
+    String password = "vasyaV1";
+    String firstName = "vasya";
+    String lastName = "kozlov";
+    long teudatZeut = 123456789;
+    List<String> roles = new ArrayList<>();
+
+    String carNumber = "012-85-145";
+    String carName = "My Pretty Car";
+    String carPassportNumber = "12345678-9";
+    String comment = "Bought for 10000 shekels";
+    User user;
 
     @BeforeAll
     static void setUpBeforeClass() {
@@ -38,106 +46,117 @@ public class EntityJunitTests {
     }
 
     @AfterAll
-    static void tearDown(){
+    static void tearDownAfterAll(){
         context.close();
     }
 
     @Test
-    public void testUsernameValidator() {
-        user = new User(id, email, name, password);
+    public void testValidUser(){
+        user = new User(email, password, firstName, lastName, teudatZeut, roles);
         Set<ConstraintViolation<User>> validates = validator.validate(user);
-        assertTrue(validates.size() == 0);
+        assertTrue(validates.isEmpty());
+    }
 
-        String name1 = "vav";
-        User user1 = new User(id, email, name1, password);
-        Set<ConstraintViolation<User>> validates1 = validator.validate(user1);
-        assertTrue(validates1.size() > 0);
-        validates1.stream().map(v -> v.getMessage())
-                .forEach(message->assertEquals("Name should be from 5 to 20 symbols", message));
+    @Test
+    public void testIdValidator() {
+        validation("12", "user", "id");
+        validation("111111111111111", "user", "id");
+    }
+    @Test
+    public void testFirstNameValidator() {
+        validation("v", "user", "firstName");
+        validation("v213", "user", "firstName");
+        validation("csdvsdfbvgnhnfhndghntyhnsbrgvrgvr", "user", "firstName");
+    }
 
-        String name2 = "csdvsdfbvgnhnfhndghntyhnsbrgvrgvr";
-        User user2 = new User(id, email, name2, password);
-        Set<ConstraintViolation<User>> validates2 = validator.validate(user2);
-        assertTrue(validates2.size() > 0);
-        validates2.stream().map(v -> v.getMessage())
-                .forEach(message->assertEquals("Name should be from 5 to 20 symbols", message));
+    @Test
+    public void testLastNameValidator() {
+        validation("v", "user", "lastName");
+        validation("v4fh", "user", "lastName");
+        validation("csdvsdfbvgnhnfhndghntyhnsbrgvrgvr", "user", "lastName");
     }
 
     @Test
     public void testEmailValidator() {
-        String email1 = "vav";
-        User user1 = new User(id, email1, name, password);
-        Set<ConstraintViolation<User>> validates1 = validator.validate(user1);
-        assertTrue(validates1.size() > 0);
-        validates1.stream().map(v -> v.getMessage())
-                .forEach(message->assertEquals("Email should include only english letters, digits and symbols: ._", message));
-
-        String email2 = "csdvsd@ntyhnsbrgvrgvr";
-        User user2 = new User(id, email2, name, password);
-        Set<ConstraintViolation<User>> validates2 = validator.validate(user2);
-        assertTrue(validates2.size() > 0);
-        validates2.stream().map(v -> v.getMessage())
-                .forEach(message->assertEquals("Email should include only english letters, digits and symbols: ._", message));
-
-        String email3 = "csdvsd@ntyhnsbrgvrgvr.fsdrf.fwefw";
-        User user3 = new User(id, email3, name, password);
-        Set<ConstraintViolation<User>> validates3 = validator.validate(user2);
-        assertTrue(validates2.size() > 0);
-        validates2.stream().map(v -> v.getMessage())
-                .forEach(message->assertEquals("Email should include only english letters, digits and symbols: ._", message));
+        validation("csd", "user", "email");
+        validation("csdvsdfbvgnhnfhndghntyhnsbrgvrgvr", "user", "email");
+        validation("csdvsd@ntyhnsbrgvrgvr.fsdrf.fwefvw", "user", "email");
     }
 
     @Test
     public void testPasswordValidator() {
-        String pass1 = "vav";
-        User user1 = new User(id, email, name, pass1);
-        Set<ConstraintViolation<User>> validates1 = validator.validate(user1);
-        assertTrue(validates1.size() > 0);
-        validates1.stream().map(v -> v.getMessage())
-                .forEach(message->assertEquals("Password should be not less than 6 characters and contain at least one uppercase letter and a digit", message));
-
-        String pass2 = "csdvsd1tyhnsbrgvrgvr";
-        User user2 = new User(id, email, name, pass2);
-        Set<ConstraintViolation<User>> validates2 = validator.validate(user2);
-        assertTrue(validates2.size() > 0);
-        validates2.stream().map(v -> v.getMessage())
-                .forEach(message->assertEquals("Password should be not less than 6 characters and contain at least one uppercase letter and a digit", message));
-
-        String pass3 = "fsdrfwefwW";
-        User user3 = new User(id, email, name, pass3);
-        Set<ConstraintViolation<User>> validates3 = validator.validate(user3);
-        assertTrue(validates2.size() > 0);
-        validates3.stream().map(v -> v.getMessage())
-                .forEach(message->assertEquals("Password should be not less than 6 characters and contain at least one uppercase letter and a digit", message));
+        validation("csd", "user", "password");
+        validation("csdvsd1tyhnsbrgvrgvr", "user", "password");
+        validation("fsdrfwefwW", "user", "password");
+        validation("fsdrfwef12", "user", "password");
+    }
+    @Test
+    public void testCarValid(){
+        Car car = new Car(carNumber, carName, carPassportNumber, comment, teudatZeut);
+        Set<ConstraintViolation<Car>> validates = validator.validate(car);
+        assertTrue(validates.isEmpty());
     }
 
     @Test
     public void testCarNumberValidator() {
-        Car car = new Car(carId, carNumber, id);
-        Set<ConstraintViolation<Car>> validates = validator.validate(car);
-        assertTrue(validates.size() == 0);
+        validation("02146554", "car", "carNumber");
+        validation("02-146-554", "car", "carNumber");
+        validation("as-123-tg", "car", "carNumber");
+    }
 
-        String carNumber1 = "02146554";
-        Car car1 = new Car(carId, carNumber1, id);
-        Set<ConstraintViolation<Car>> validates1 = validator.validate(car1);
-        assertTrue(validates1.size() > 0);
-        validates1.stream().map(v -> v.getMessage())
-                .forEach(message->assertEquals("Car number should be of type XX-XXX-XX or XXX-XX-XXX where 'X' is a digit", message));
+    @Test
+    public void testCarPassportNumberValidator() {
+        validation("123456789123", "car", "carPassportNumber");
+        validation("02-146", "car", "carPassportNumber");
+        validation("as-123-tg", "car", "carPassportNumber");
+    }
 
-        String carNumber2 = "02-146-554";
-        Car car2 = new Car(carId, carNumber2, id);
-        Set<ConstraintViolation<Car>> validates2 = validator.validate(car2);
-        assertTrue(validates2.size() > 0);
-        validates2.stream().map(v -> v.getMessage())
-                .forEach(message->assertEquals("Car number should be of type XX-XXX-XX or XXX-XX-XXX where 'X' is a digit", message));
+    private void validation(String value, String type, String field){
+        Car car = null;
+        User user = null;
+        String message = null;
 
+        if(type == "car"){
+            switch (field) {
+                case "carNumber": car = new Car(value, carName, carPassportNumber, comment, teudatZeut);
+                    message = "Car number should be of type XX-XXX-XX or XXX-XX-XXX where 'X' is a digit";
+                    break;
+                case "carPassportNumber": car = new Car(carNumber, carName, value, comment, teudatZeut);
+                    message = "Only digits and '-'";
+                    break;
+            }
+            Set<ConstraintViolation<Car>> validates = validator.validate(car);
+            assertTrue(!validates.isEmpty());
+            String finalMessage1 = message;
+            validates.stream().map(v -> v.getMessage())
+                    .forEach(gotMsg->assertEquals(finalMessage1, gotMsg));
+        };
 
-        String carNumber3 = "as-123-tg";
-        Car car3 = new Car(carId, carNumber3, id);
-        Set<ConstraintViolation<Car>> validates3 = validator.validate(car3);
-        assertTrue(validates1.size() > 0);
-        validates3.stream().map(v -> v.getMessage())
-                .forEach(message->assertEquals("Car number should be of type XX-XXX-XX or XXX-XX-XXX where 'X' is a digit", message));
+        if(type == "user"){
+            switch (field) {
+                case "id":
+                    user = new User(email, password, firstName, lastName, Long.valueOf(value), roles);
+                    message = "User Id should include 9 digits";
+                    break;
+                case "firstName": user = new User(email, password, value, lastName, teudatZeut, roles);
+                    message = "Name should be from 2 to 15 symbols, only letters accepted";
+                    break;
+                case "lastName": user = new User(email, password, firstName, value, teudatZeut, roles);
+                    message = "Last name should be from 2 to 15 symbols, only letters accepted";
+                    break;
+                case "email": user = new User(value, password, firstName, lastName, teudatZeut, roles);
+                    message = "Email should include only english letters, digits and symbols: ._";
+                    break;
+                case "password": user = new User(email,value, firstName, lastName, teudatZeut, roles);
+                    message = "Password should be not less than 6 characters and contain at least one uppercase letter and a digit";
+                    break;
+            }
+            Set<ConstraintViolation<User>> validates = validator.validate(user);
+            assertTrue(!validates.isEmpty());
+            String finalMessage = message;
+            validates.stream().map(v -> v.getMessage())
+                    .forEach(gotMsg->assertEquals(finalMessage, gotMsg));
+        }
 
     }
 
