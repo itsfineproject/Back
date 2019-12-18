@@ -28,11 +28,19 @@ public class CarMapper extends AbstractMapper<CarEntity, Car> {
 
     @Override
     void mapSpecificFieldsToEntity(Car car, CarEntity carEntity) {
+<<<<<<< HEAD
         carEntity.setUser(userRepository.findById(car.getUserId()).orElse(null));
+=======
+        carEntity.setUser(userRepository.findByTeudatZeut(car.getUserId()));
+>>>>>>> models
     }
 
     @Override
     void mapSpecificFieldsToDto(CarEntity carEntity, Car car) {
+<<<<<<< HEAD
         car.setUserId(carEntity.getUser().getId());
+=======
+        car.setUserId(carEntity.getUser().getTeudatZeut());
+>>>>>>> models
     }
 }
