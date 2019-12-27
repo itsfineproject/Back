@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Column;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,13 +25,17 @@ public class Car {
     private String carName;
     @Pattern(regexp = "^[0-9-]{9,11}$", message="Only digits and '-'")
     private String carPassportNumber;
+    private LocalDateTime buyDate;
+    private LocalDateTime sellDate;
     private String comment;
-    private long userId;          //teudat zeut
+    private long userId;
 
-    public Car(String carNumber, String carName, String carPassportNumber, String comment, long userId) {
+    public Car(String carNumber, String carName, String carPassportNumber, LocalDateTime buyDate, LocalDateTime sellDate, String comment, long userId) {
         this.carNumber = carNumber;
         this.carName = carName;
         this.carPassportNumber = carPassportNumber;
+        this.buyDate = buyDate;
+        this.sellDate = sellDate;
         this.comment = comment;
         this.userId = userId;
     }

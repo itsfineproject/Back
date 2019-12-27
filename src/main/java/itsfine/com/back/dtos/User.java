@@ -16,7 +16,6 @@ import java.util.List;
 
 public class User {
 
-    @JsonIgnore
     private long id;
 
     @Column(unique=true)
@@ -40,14 +39,6 @@ public class User {
 
     private List<String> roles;
 
-    public User(String email, String password, String firstName, String lastName, long teudatZeut, List<String> roles) {
-        this.email = email;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.teudatZeut = teudatZeut;
-        this.roles = roles;
-    }
 
     public User(String email, String password, List<String> roles) {
         this.email = email;
