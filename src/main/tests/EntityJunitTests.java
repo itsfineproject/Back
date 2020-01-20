@@ -10,6 +10,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -27,6 +28,7 @@ public class EntityJunitTests {
         validator = validatorFactory.usingContext().getValidator();
     }
 
+    long id = 123456789;
     String email = "vasya@vfdrt.com";
     String password = "vasyaV1";
     String firstName = "vasya";
@@ -37,6 +39,8 @@ public class EntityJunitTests {
     String carNumber = "012-85-145";
     String carName = "My Pretty Car";
     String carPassportNumber = "12345678-9";
+    LocalDateTime buyDate = LocalDateTime.now().minusYears(1);
+    LocalDateTime sellDate = null;
     String comment = "Bought for 10000 shekels";
     User user;
 
@@ -52,7 +56,7 @@ public class EntityJunitTests {
 
     @Test
     public void testValidUser(){
-        user = new User(email, password, firstName, lastName, teudatZeut, roles);
+        user = new User(id, email, password, firstName, lastName, teudatZeut, roles);
         Set<ConstraintViolation<User>> validates = validator.validate(user);
         assertTrue(validates.isEmpty());
     }
@@ -92,7 +96,7 @@ public class EntityJunitTests {
     }
     @Test
     public void testCarValid(){
-        Car car = new Car(carNumber, carName, carPassportNumber, comment, teudatZeut);
+        Car car = new Car(carNumber, carName, carPassportNumber, buyDate, sellDate, comment, teudatZeut);
         Set<ConstraintViolation<Car>> validates = validator.validate(car);
         assertTrue(validates.isEmpty());
     }
@@ -118,10 +122,10 @@ public class EntityJunitTests {
 
         if(type.equals("car")){
             switch (field) {
-                case "carNumber": car = new Car(value, carName, carPassportNumber, comment, teudatZeut);
+                case "carNumber": car = new Car(value, carName, carPassportNumber, buyDate, sellDate, comment, teudatZeut);
                     message = "Car number should be of type XX-XXX-XX or XXX-XX-XXX where 'X' is a digit";
                     break;
-                case "carPassportNumber": car = new Car(carNumber, carName, value, comment, teudatZeut);
+                case "carPassportNumber": car = new Car(carNumber, carName, value, buyDate, sellDate, comment, teudatZeut);
                     message = "Only digits and '-'";
                     break;
             }
@@ -135,19 +139,19 @@ public class EntityJunitTests {
         if(type.equals("user")){
             switch (field) {
                 case "id":
-                    user = new User(email, password, firstName, lastName, Long.valueOf(value), roles);
+                    user = new User(id, email, password, firstName, lastName, Long.valueOf(value), roles);
                     message = "User Id should include 9 digits";
                     break;
-                case "firstName": user = new User(email, password, value, lastName, teudatZeut, roles);
+                case "firstName": user = new User(id, email, password, value, lastName, teudatZeut, roles);
                     message = "Name should be from 2 to 15 symbols, only letters accepted";
                     break;
-                case "lastName": user = new User(email, password, firstName, value, teudatZeut, roles);
+                case "lastName": user = new User(id, email, password, firstName, value, teudatZeut, roles);
                     message = "Last name should be from 2 to 15 symbols, only letters accepted";
                     break;
-                case "email": user = new User(value, password, firstName, lastName, teudatZeut, roles);
+                case "email": user = new User(id, value, password, firstName, lastName, teudatZeut, roles);
                     message = "Email should include only english letters, digits and symbols: ._";
                     break;
-                case "password": user = new User(email,value, firstName, lastName, teudatZeut, roles);
+                case "password": user = new User(id, email,value, firstName, lastName, teudatZeut, roles);
                     message = "Password should be not less than 6 characters and contain at least one uppercase letter and a digit";
                     break;
             }

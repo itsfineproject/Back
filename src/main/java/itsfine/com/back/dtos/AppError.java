@@ -4,18 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 
-public class Fine {
+public class AppError {
 
-    private long id;
-    private int parkingId;
-    private double sum;
     private LocalDateTime dateTime;
-    private String carNumber;
-    private boolean isPaid;
-
+    private String errorMessage;
+    private String errorSource;
 }

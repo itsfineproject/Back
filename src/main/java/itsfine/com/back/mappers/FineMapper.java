@@ -19,17 +19,17 @@ public class FineMapper extends AbstractMapper<FineEntity, Fine> {
                 .addMappings(m->m.skip(FineEntity::setCar))
                 .setPostConverter(toEntityConverter());
         modelMapper.createTypeMap(FineEntity.class, Fine.class)
-                .addMappings(m->m.skip(Fine::setCarId))
+                .addMappings(m->m.skip(Fine::setCarNumber))
                 .setPostConverter(toDtoConverter());
     }
 
     @Override
     void mapSpecificFieldsToEntity(Fine fine, FineEntity fineEntity) {
-        fineEntity.setCar(carRepository.findById(fine.getCarId()).orElse(null));
+        fineEntity.setCar(carRepository.findByCarNumber(fine.getCarNumber()));
     }
 
     @Override
     void mapSpecificFieldsToDto(FineEntity fineEntity, Fine fine) {
-        fine.setCarId(fineEntity.getCar().getId());
+        fine.setCarNumber(fineEntity.getCar().getCarNumber());
     }
 }

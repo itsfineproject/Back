@@ -1,14 +1,9 @@
 package itsfine.com.back.controllers;
 
-import itsfine.com.back.dtos.Car;
-import itsfine.com.back.dtos.Fine;
-import itsfine.com.back.dtos.InvalidCarData;
-import itsfine.com.back.dtos.User;
+import itsfine.com.back.dtos.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 @RestController
@@ -16,115 +11,94 @@ public class ItsFineBackController {
 
 //  ----------USER-----------
 
-    @PostMapping("/user")
-    public ResponseEntity addUser(@RequestBody User user){
+    @PostMapping("/register")
+    public ResponseEntity<User> registerUser(@RequestBody User user){
+        return new ResponseEntity(null);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<User> loginUser(@RequestBody User user){
         return new ResponseEntity(null);
     }
 
     @PutMapping("/user")
-    public ResponseEntity editUser(@RequestBody User user){
+    public ResponseEntity<String> editUser(@RequestBody User user){
         return new ResponseEntity(null);
-    }
-
-    @GetMapping("/user")
-    public User getUserDetails(@RequestBody User user){
-        return null;
     }
 
     //  ----------CAR-----------
 
     @GetMapping("/userCars")
-    public List<Car> getUserCars(@RequestBody User user){
+    public ResponseEntity<Set<Car>> getUserCars(@RequestParam long userId){
         return null;
     }
 
     @PostMapping("/car")
-    public ResponseEntity addCar(@RequestBody Car car){
+    public ResponseEntity<Car> addCar(@RequestBody Car car){
         return new ResponseEntity(null);
     }
 
     @PutMapping("/car")
-    public ResponseEntity editCar(@RequestBody Car car){
+    public ResponseEntity<Car> editCar(@RequestBody Car car){
         return new ResponseEntity(null);
     }
 
-    @DeleteMapping("/car")
-    public ResponseEntity removeCar(@RequestBody Car car){
+    @DeleteMapping("/car")                                                          //??
+    public ResponseEntity<String> removeCar(@RequestParam String carNumber){
         return new ResponseEntity(null);
     }
 
     //  ----------FINE-----------
 
     @GetMapping("/carFines")
-    public List<Fine> getCarFines(@RequestBody Car car){
+    public ResponseEntity<Set<Fine>> getCarFines(@RequestParam String carNumber){
         return null;
     }
 
     @PutMapping("/pay")
-    public ResponseEntity fineSetPaid(@RequestBody Fine fine){
+    public ResponseEntity<Boolean> fineSetPaid(@RequestParam long fineId){
         return new ResponseEntity(null);
     }
 
     //  ----------ADMIN-----------
 
-    @PutMapping("/admin")
-    public ResponseEntity setAdmin(@RequestBody User user){
+    @PostMapping("/admin")
+    public ResponseEntity<String> addAdmin(@RequestBody User user){
         return new ResponseEntity(null);
-    }
-
-    @GetMapping("/invalidDataByParkingIds")
-    public List<InvalidCarData> getInvalidDataByParkingIdsByPeriod(@RequestParam LocalDateTime from,
-                                                             @RequestParam LocalDateTime to,
-                                                             @RequestParam Set<Integer> parkingIds){
-        return null;
     }
 
     @GetMapping("/invalidData")
-    public List<InvalidCarData> getAllInvalidDataByPeriod(@RequestParam LocalDateTime from,
-                                                          @RequestParam LocalDateTime to){
+    public ResponseEntity<Set<InvalidCarData>> getInvalidCarData(){
+        return null;                                                 // returns last [preset in config] amount of elements (for ex.last 10 elements)
+    }
+
+    @GetMapping("/invalidDataFiltered")
+    public ResponseEntity<Set<InvalidCarData>> getInvalidDataFiltered(@RequestParam LocalDateTime from,
+                                                                  @RequestParam LocalDateTime to){
         return null;
     }
 
-    @DeleteMapping("/invalidData")
-    public ResponseEntity removeInvalidData(@RequestParam Set<Integer> invalidDataIds){
-        return new ResponseEntity(null);
+    @GetMapping("/appErrors")
+    public ResponseEntity<Set<AppError>> getAppErrors(){
+        return null;                                                 // returns last [preset in config] amount of elements (for ex.last 10 elements)
     }
 
-    @GetMapping("/finesByParkingIds")
-    public List<Fine> getAllFinesByParkingIdsByPeriod(@RequestParam LocalDateTime from,
-                                                          @RequestParam LocalDateTime to,
-                                                          @RequestParam Set<Integer> parkingIds){
+    @GetMapping("/appErrorsFiltered")
+    public ResponseEntity<Set<AppError>> getAppErrorsFiltered(@RequestParam LocalDateTime from,
+                                                             @RequestParam LocalDateTime to,
+                                                             @RequestParam String errorSource){
+        return null;                                                 // each of request params could be null
+    }
+
+    @GetMapping("/stats")
+    public ResponseEntity<Set<Statistics>> getStats(){
+        return null;                                                 // returns default statistics (maybe for last month)
+    }
+
+    @GetMapping("/statsFiltered")
+    public ResponseEntity<Set<Statistics>> getStatsFiltered(@RequestParam LocalDateTime from,
+                                                              @RequestParam LocalDateTime to){
         return null;
     }
 
-    @GetMapping("/finesByPeriod")
-    public List<Fine> getAllFinesByPeriod(@RequestParam LocalDateTime from,
-                                          @RequestParam LocalDateTime to){
-        return null;
-    }
-
-    @GetMapping("/mostFinedUsers")
-    public Map<User, Double> getMostFinedUsers(){             // Double = sum of fines
-        return null;
-    }
-
-    @GetMapping("/mostFiningParkings")
-    public Map<Integer, Double> getMostFiningParkings(){      // Integer = parking Id, Double = amount of fines
-        return null;
-    }
-
-    @GetMapping("/mostFiningPeriod")
-    public Map<String, Double> getMostFiningPeriod(){         // String = period from-to, Double = sum
-        return null;
-    }
-
-    @GetMapping("/mostInvalidParkings")
-    public Map<Integer, Long> getMostInvalidDataParkings(){   // Integer = parking Id, Long = invalid data amount
-        return null;
-    }
-
-    @GetMapping("/currentLogs")
-    public void getCurrentLogsByPeriod(){
-
-    }
 }

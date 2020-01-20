@@ -22,6 +22,11 @@ public class InvalidCarDataDoc {
     private String car_number;
     private LocalDateTime date_time;
 
+    public InvalidCarDataDoc(int parking_id, String car_number, LocalDateTime date_time) {
+        this.parking_id = parking_id;
+        this.car_number = car_number;
+        this.date_time = date_time;
+    }
 }
 
 
